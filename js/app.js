@@ -64,8 +64,14 @@ const Nav = () => (
     </nav>
 )
 
-const Attraction = ({ title, description, className, image }) => (
-    <div
+//we can also create components as classes
+//these give us more advance functionality and features such as the component life cycle 
+//as well as react's in-built state
+class Attraction extends React.Component {
+    render() {
+        const { title, description, className, image } = this.props;
+        return (
+            <div
         className={`ph4 ph5-ns ph0-l mb4 mb5-ns w-100 overflow-hidden pointer attraction ${className}`}
     >
         <div className="relative">
@@ -78,7 +84,9 @@ const Attraction = ({ title, description, className, image }) => (
             <img src={`../images/${image}`} className="db" />
         </div>
     </div>
-)
+        );
+    }
+}
 
 const App = () => (
     <div>
