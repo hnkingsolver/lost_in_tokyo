@@ -75,5 +75,12 @@ const attractions = [
     link: 'http://bigloverecords.jp/',
     image: 'image_10.jpg',
     className: 'w-third-l ml5-l'
+  },
+  {
+    title: "Vampire Cafe",
+    description: 'Vampire-themed spot offering Japanese fare in a spooky, candlelit space with red velvet curtains.',
+    link: 'https://ddgmybook-attachments.s3-ap-northeast-1.amazonaws.com/production/shop_informations/18/3ea549787e2fd7d6/original/E_VAMPIRE_CAFE.pdf?1504229079',
+    image: 'image_11.jpg',
+    className: 'w-third-l ml5-l'
   }
 ];
