@@ -64,28 +64,8 @@ const Nav = () => (
     </nav>
 )
 
-//we can also create components as classes
-//these give us more advance functionality and features such as the component life cycle 
-//as well as react's in-built state
-class Attraction extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            showInfo: false
-        };
-    }
-
-
-    render() {
-        const { title, description, className, image } = this.props;
-        const {showInfo} = this.state
-        return (
-            <div
-                className={`ph4 ph5-ns ph0-l mb4 mb5-ns w-100 overflow-hidden pointer attraction ${className}`}
-                onClick ={() => this.setState({showInfo: true})} 
-                >
-                <div className="relative">
-                    <div className="absolute w-100 h-100 flex items-center pa3 pa4-ns bg-aqua overlay"
+const Overlay = ({showInfo, title, description}) => (
+    <div className="absolute w-100 h-100 flex items-center pa3 pa4-ns bg-aqua overlay"
                     style={{
                         //we do a test to see whether or not its true,
                         // if it is, we change the transform to be none, otherwise -100%
@@ -97,6 +77,54 @@ class Attraction extends React.Component {
                             <p className="lh-title lh-copy-ns mv0 black f6 measure-l">{description}</p>
                         </div>
                     </div>
+)
+
+//we can also create components as classes
+//these give us more advance functionality and features such as the component life cycle 
+//as well as react's in-built state
+class Attraction extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            showInfo: false
+        };
+        //here we tell our toggleInfo about this by using bind
+        // otherwise, things like setState will not work
+        this.toggleInfo = this.toggleInfo.bind(this);
+        this.closeInfo = this.closeInfo.bind(this);
+    }
+//this is our own method
+toggleInfo() {
+    this.setState((prevState, props) => ({
+        //here we invert our showInfo boolean by using the
+        //previous state and the ! exclamation mark
+        showInfo: !prevState.showInfo
+    }));
+}
+
+closeInfo() {
+    this.setState({
+        //here we use setState the usual way becasue we dont need to
+        //access the previous state, we're just force setting the
+        //showInfo to be false
+        showInfo: false
+    });
+}
+
+
+    render() {
+        const { title, description, className, image } = this.props;
+        const {showInfo} = this.state
+        return (
+            <div
+                className={`ph4 ph5-ns ph0-l mb4 mb5-ns w-100 overflow-hidden pointer attraction ${className}`}
+                onClick ={this.toggleInfo} 
+                //this runs when mouse leaves the attraction element
+                onMouseLeave={this.closeInfo}
+                >
+                <div className="relative">
+                    {/* here we remember to pass along all of our props and state*/}
+                    <Overlay {...this.props} {...this.state}/>
                     <img src={`../images/${image}`} className="db" />
                 </div>
             </div>
