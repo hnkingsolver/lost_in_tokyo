@@ -68,22 +68,38 @@ const Nav = () => (
 //these give us more advance functionality and features such as the component life cycle 
 //as well as react's in-built state
 class Attraction extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            showInfo: false
+        };
+    }
+
+
     render() {
         const { title, description, className, image } = this.props;
+        const {showInfo} = this.state
         return (
             <div
-        className={`ph4 ph5-ns ph0-l mb4 mb5-ns w-100 overflow-hidden pointer attraction ${className}`}
-    >
-        <div className="relative">
-            <div className="absolute w-100 h-100 flex items-center pa3 pa4-ns bg-aqua overlay">
-                <div>
-                    <h1 className="f4 f3-ns mt0 mb2 regular black normal lh-title">{title}</h1>
-                    <p className="lh-title lh-copy-ns mv0 black f6 measure-l">{description}</p>
+                className={`ph4 ph5-ns ph0-l mb4 mb5-ns w-100 overflow-hidden pointer attraction ${className}`}
+                onClick ={() => this.setState({showInfo: true})} 
+                >
+                <div className="relative">
+                    <div className="absolute w-100 h-100 flex items-center pa3 pa4-ns bg-aqua overlay"
+                    style={{
+                        //we do a test to see whether or not its true,
+                        // if it is, we change the transform to be none, otherwise -100%
+                        transform: showInfo ? 'none' : 'translateY(-100%)'
+                    }}
+                    >
+                        <div>
+                            <h1 className="f4 f3-ns mt0 mb2 regular black normal lh-title">{title}</h1>
+                            <p className="lh-title lh-copy-ns mv0 black f6 measure-l">{description}</p>
+                        </div>
+                    </div>
+                    <img src={`../images/${image}`} className="db" />
                 </div>
             </div>
-            <img src={`../images/${image}`} className="db" />
-        </div>
-    </div>
         );
     }
 }
